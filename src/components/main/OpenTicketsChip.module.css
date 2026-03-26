@@ -1,0 +1,11 @@
+.chipWrapper {
+  display: flex;
+  border-radius: 10px;
+  padding: 0.25rem;
+  border: var(--main-border);
+}
+
+.count {
+  display: flex;
+  gap: 0.25rem;
+}

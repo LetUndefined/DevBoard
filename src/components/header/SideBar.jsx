@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./SideBar.module.css";
 import ActiveProject from "./ActiveProject";
+import MenuSelect from "./MenuSelect";
 
 const SideBar = () => {
   return (
@@ -11,8 +12,7 @@ const SideBar = () => {
         </div>
 
         <div className={styles.menuSelectItems}>
-          <span>Issues</span>
-          <span>Dashboard</span>
+          <MenuSelect />
         </div>
 
         <div className={styles.projects}>
