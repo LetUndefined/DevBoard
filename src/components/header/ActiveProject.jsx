@@ -1,13 +1,11 @@
 import React from "react";
-import styles from "./ActiveProject.module.css";
 
 const ActiveProject = () => {
   return (
     <>
-      <div className={styles.activeProjects}>
-        <span>
-          Project 1 <span className={styles.tickets}>0</span>
-        </span>
+      <div className="flex justify-between p-2">
+        <span>Project 1</span>
+        <span>0</span>
       </div>
     </>
   );

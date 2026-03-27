@@ -1,28 +1,26 @@
 import React from "react";
-import styles from "./SideBar.module.css";
+
 import ActiveProject from "./ActiveProject";
 import MenuSelect from "./MenuSelect";
 
 const SideBar = () => {
   return (
     <>
-      <div className={styles.wrapper}>
-        <div className={styles.title}>
-          <h2 className={styles.sidebarTitle}>DevBoard</h2>
+      <div className="flex flex-col h-screen">
+        <div className=" p-4 border-b-1 border-r border-[var(--main-border)] h-[60px] ">
+          <h2 className="text-[20px]">DevBoard</h2>
         </div>
 
-        <div className={styles.menuSelectItems}>
+        <div className="flex flex-col p-4 border-b border-r-1 gap-1  border-[var(--main-border)]">
           <MenuSelect />
         </div>
 
-        <div className={styles.projects}>
-          <div className={styles.projectsTitle}>
+        <div className="flex flex-col border-r gap-1  border-[var(--main-border)] p-2 flex-1">
+          <div className="text-[12px] pt-2">
             <h4>Projects</h4>
           </div>
           <ActiveProject />
         </div>
-
-        <div className={styles.profile}></div>
       </div>
     </>
   );

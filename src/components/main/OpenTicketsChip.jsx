@@ -1,11 +1,10 @@
 import React from "react";
-import styles from "./OpenTicketsChip.module.css";
 
 const OpenTicketsChip = () => {
   return (
     <>
-      <div className={styles.chipWrapper}>
-        <div className={styles.count}>
+      <div className="flex border-1 p-1 text-[10px] rounded-full border-[var(--main-border)]">
+        <div className="flex gap-1">
           <span>9</span>
           <span>open</span>
         </div>
