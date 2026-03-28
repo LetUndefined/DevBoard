@@ -4,4 +4,8 @@
   --main-bg: rgb(34, 34, 42);
   --main-color: rgb(57, 127, 188);
   --main-border: rgb(67, 67, 82);
+  --color-white: #ffffff;
+  --color-grey: #858585;
+  --bg-blue: #4e8ff7;
+  --bg-lb: #4e8ff795;
 }
