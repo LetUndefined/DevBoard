@@ -5,7 +5,12 @@
   --main-color: rgb(57, 127, 188);
   --main-border: rgb(67, 67, 82);
   --color-white: #ffffff;
+  --color-dw: #cbcbcb;
   --color-grey: #858585;
-  --bg-blue: #4e8ff7;
-  --bg-lb: #4e8ff795;
+  --color-dg: #525252;
+  --bg-blue: #78a5ee;
+  --bg-db: #28467666;
+
+  --button-blue: #5190f6;
+  --button-hover: #80affa;
 }

@@ -7,7 +7,7 @@ const SideBar = () => {
   return (
     <>
       <div className="flex flex-col h-screen  text-[var(--color-grey)]">
-        <div className=" p-4 border-b-1 border-r border-[var(--main-border)] h-[60px] ">
+        <div className=" p-4 border-b-1 border-r border-[var(--main-border)] h-15 ">
           <h2 className="text-[20px] text-[var(--color-white)]">DevBoard</h2>
         </div>
 
