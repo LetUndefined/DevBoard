@@ -1,8 +1,8 @@
 import React from "react";
 
-const PrioritySelect = () => {
+const PrioritySelect = ({ name, value, onChange }) => {
   return (
-    <select name="priority" id="priority" className="border border-[var(--main-border)] w-full outline-none p-2 rounded-md placeholder-[var(--color-dg)] text-[var(--color-dw)] pl-2">
+    <select name={name} value={value} onChange={onChange} id="priority" className="border border-[var(--main-border)] w-full outline-none p-2 rounded-md placeholder-[var(--color-dg)] text-[var(--color-dw)] pl-2">
       <option value="low">Low</option>
       <option value="medium">Medium</option>
       <option value="high">High</option>

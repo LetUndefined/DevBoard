@@ -1,24 +1,23 @@
 import React from "react";
 import { useState } from "react";
-const TagSelect = () => {
-  const [tags, setTags] = useState([]);
+const TagSelect = ({ name, value, onChange }) => {
   const [inputValue, setValue] = useState("");
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && inputValue.trim() !== "") {
       e.preventDefault();
-      setTags([...tags, inputValue.trim()]);
+      onChange({ target: { name, value: [...value, inputValue.trim()] } });
       setValue("");
     }
   };
 
   const handleRemoveTag = (indexToRemove) => {
-    setTags(tags.filter((_, index) => index !== indexToRemove));
+    onChange({ target: { name, value: value.filter((_, index) => index !== indexToRemove) } });
   };
   return (
     <>
       <div className="flex flex-wrap gap-2 mb-2">
-        {tags.map((tags, index) => {
+        {value.map((tags, index) => {
           return (
             <span key={index} className="bg-blue-500 text-white px-3 py-1 rounded-full text-sm flex items-center gap-2">
               {tags}
@@ -32,6 +31,7 @@ const TagSelect = () => {
       <input
         type="text"
         value={inputValue}
+        name={name}
         onChange={(e) => setValue(e.target.value)}
         className="border border-[var(--main-border)] w-full outline-none p-2 rounded-md placeholder-[var(--color-dg)] text-[var(--color-dw)] pl-2"
         placeholder="Type and press Enter to add tags..."
