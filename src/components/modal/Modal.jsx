@@ -8,26 +8,35 @@ import TagSelect from "./TagSelect";
 import { useContext } from "react";
 import { ModalContext } from "../../context/ModalContext";
 import { useState } from "react";
+import { IssueContext } from "../../context/IssueContext";
+
+const initalFormValue = {
+  id: "",
+  title: "",
+  description: "",
+  status: "toDo",
+  priority: "low",
+  dueDate: "",
+  project: "project",
+  tags: [],
+};
 
 const Modal = () => {
   const { modal, openModal } = useContext(ModalContext);
-  const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-    status: "toDo",
-    priority: "low",
-    dueDate: "",
-    project: "project",
-    tags: [],
-  });
+  const { issues, setIssues } = useContext(IssueContext);
+  const [counter, setCounter] = useState(0);
+  const [formData, setFormData] = useState(initalFormValue);
 
   const handleOnChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleFormSubmit = () => {
+    setCounter((prev) => prev + 1);
+    const newIssue = { ...formData, id: `ID-${counter}` };
+    setIssues([...issues, newIssue]);
+    setFormData(initalFormValue);
     openModal(false);
-    console.log(formData);
   };
 
   if (!modal) return null;
