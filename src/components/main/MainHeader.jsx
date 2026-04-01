@@ -6,7 +6,7 @@ const MainHeader = () => {
   const { openModal } = useContext(ModalContext);
   return (
     <>
-      <div className="flex justify-between items-center border-b border-[var(--main-border)] px-4 h-15  ">
+      <div className="flex justify-between items-center border-b border-[var(--main-border)] bg-[var(--main-bg)] px-4 h-15  ">
         <div className="flex items-center gap-2">
           <div className="text-[var(--color-white)]">
             <h2>DevBoard</h2>

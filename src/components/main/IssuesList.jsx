@@ -6,14 +6,14 @@ const IssuesList = () => {
   const { issues } = useContext(IssueContext);
   return (
     <>
-      <table className="w-full">
-        <thead className="bg-[var(--bg-db)] h-[2rem] w-full ">
-          <tr className="uppercase text-[var(--color-grey)] text-[10px] ">
-            <th className="text-left pl-4">ID</th>
-            <th className="text-left pl-4">Title</th>
-            <th className="text-right pr-4">Status</th>
-            <th className="text-right pr-4">Tags</th>
-            <th className="text-right pr-4">Due Date</th>
+      <table className="w-full table-fixed ">
+        <thead className="h-[2rem] w-full ">
+          <tr className="uppercase text-[var(--color-grey)] text-[10px] bg-[var(--main-bg)] ">
+            <th className="text-left pl-4 w-[10%]">ID</th>
+            <th className="text-left pl-4 w-[45%]">Title</th>
+            <th className="text-left pl-4 w-[10%]">Status</th>
+            <th className="text-left w-[10%]">Tags</th>
+            <th className="text-left pl-4 w-[15%]">Due Date</th>
           </tr>
         </thead>
         <tbody className="">

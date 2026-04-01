@@ -13,7 +13,7 @@ const App = () => {
           <SideBar />
         </header>
         <IssueProvider>
-          <main className=" bg-[var(--main-bg)] h-screen flex-1 ">
+          <main className="  h-screen flex-1 bg-[var(--secondary-bg)]  ">
             <MainHeader />
             <IssuesList />
             <Modal />

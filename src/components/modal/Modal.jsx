@@ -14,7 +14,7 @@ const initalFormValue = {
   id: "",
   title: "",
   description: "",
-  status: "toDo",
+  status: "Todo",
   priority: "low",
   dueDate: "",
   project: "project",
