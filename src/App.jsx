@@ -4,6 +4,7 @@ import MainHeader from "./components/main/MainHeader";
 import Modal from "./components/modal/Modal";
 import { IssueProvider } from "./context/IssueProvider";
 import IssuesList from "./components/main/IssuesList";
+import { EditRowProvider } from "./context/EditRowProvider";
 
 const App = () => {
   return (
@@ -15,8 +16,10 @@ const App = () => {
         <IssueProvider>
           <main className="  h-screen flex-1 bg-[var(--secondary-bg)]  ">
             <MainHeader />
-            <IssuesList />
-            <Modal />
+            <EditRowProvider>
+              <IssuesList />
+              <Modal />
+            </EditRowProvider>
           </main>
         </IssueProvider>
         <footer></footer>

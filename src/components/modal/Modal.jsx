@@ -9,8 +9,9 @@ import { useContext } from "react";
 import { ModalContext } from "../../context/ModalContext";
 import { useState } from "react";
 import { IssueContext } from "../../context/IssueContext";
+import { EditRowContext } from "../../context/EditRowContext";
 
-const initalFormValue = {
+const initialFormValue = {
   id: "",
   title: "",
   description: "",
@@ -24,19 +25,29 @@ const initalFormValue = {
 const Modal = () => {
   const { modal, openModal } = useContext(ModalContext);
   const { issues, setIssues } = useContext(IssueContext);
-  const [counter, setCounter] = useState(0);
-  const [formData, setFormData] = useState(initalFormValue);
+  const { data, isEditing, setIsEditing, setData } = useContext(EditRowContext);
+  const [formData, setFormData] = useState(initialFormValue);
+
+  const newData = isEditing ? data : formData;
 
   const handleOnChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    if (isEditing) {
+      setData({ ...data, [e.target.name]: e.target.value });
+      console.log([e.target.name], e.target.value);
+    } else {
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+    }
   };
 
   const handleFormSubmit = () => {
-    setCounter((prev) => prev + 1);
-    const newIssue = { ...formData, id: `ID-${counter}` };
-    setIssues([...issues, newIssue]);
-    setFormData(initalFormValue);
+    if (isEditing) {
+      setIssues(issues.map((e) => (e.id === data.id ? data : e)));
+    } else {
+      setIssues([...issues, { ...formData, id: crypto.randomUUID() }]);
+    }
+    setFormData(initialFormValue);
     openModal(false);
+    setIsEditing(false);
   };
 
   if (!modal) return null;
@@ -53,7 +64,7 @@ const Modal = () => {
           <FormField label="Title">
             <input
               type="text"
-              value={formData.title}
+              value={newData.title}
               onChange={handleOnChange}
               name="title"
               className="border border-[var(--main-border)] w-full outline-none p-2 rounded-md placeholder-[var(--color-dg)] text-[var(--color-dw)] pl-2"
@@ -63,7 +74,7 @@ const Modal = () => {
 
           <FormField label="Description">
             <textarea
-              value={formData.description}
+              value={newData.description}
               onChange={handleOnChange}
               name="description"
               id="description"
@@ -75,12 +86,12 @@ const Modal = () => {
           <div className="flex gap-4">
             <div className="flex flex-col flex-1">
               <FormField label="Status">
-                <StatusSelect onChange={handleOnChange} name="status" value={formData.status} />
+                <StatusSelect onChange={handleOnChange} name="status" value={newData.status} />
               </FormField>
             </div>
             <div className="flex flex-col flex-1">
               <FormField label="Priority">
-                <PrioritySelect onChange={handleOnChange} name="priority" value={formData.priority} />
+                <PrioritySelect onChange={handleOnChange} name="priority" value={newData.priority} />
               </FormField>
             </div>
           </div>
@@ -88,29 +99,37 @@ const Modal = () => {
           <div className="flex gap-4">
             <div className="flex flex-col flex-1">
               <FormField label="Due Date">
-                <DateInput onChange={handleOnChange} name="dueDate" value={formData.dueDate} />
+                <DateInput onChange={handleOnChange} name="dueDate" value={newData.dueDate} />
               </FormField>
             </div>
             <div className="flex flex-col flex-1">
               <FormField label="Project">
-                <ProjectSelect onChange={handleOnChange} name="project" value={formData.project} />
+                <ProjectSelect onChange={handleOnChange} name="project" value={newData.project} />
               </FormField>
             </div>
           </div>
 
           <div>
             <FormField>
-              <TagSelect onChange={handleOnChange} name="tags" value={formData.tags} />
+              <TagSelect onChange={handleOnChange} name="tags" value={newData.tags} />
             </FormField>
           </div>
         </div>
-        <div className="flex justify-end py-4 gap-2  pr-6 border-t border-[var(--main-border)] ">
-          <button onClick={() => openModal(false)} className="bg-[var(--color-dg)] px-4 py-2 text-[var(--color-white)] hover:bg-[var(--color-grey)] cursor-pointer rounded-md text-[14px]">
-            Cancel
-          </button>
-          <button onClick={handleFormSubmit} className="bg-[var(--button-blue)] px-4 py-2 text-[var(--color-white)] hover:bg-[var(--button-hover)] cursor-pointer rounded-md text-[14px]  ">
-            Create Issue
-          </button>
+        <div className="flex justify-between py-4 gap-2  px-6 border-t border-[var(--main-border)] ">
+          {newData.id && (
+            <div className="text-[0.8rem] gap-2 text-white flex items-center">
+              <span>ID:</span>
+              <span>{newData.id}</span>
+            </div>
+          )}
+          <div className="flex gap-2">
+            <button onClick={() => [openModal(false), setIsEditing(false)]} className="bg-[var(--color-dg)] px-4 py-2 text-[var(--color-white)] hover:bg-[var(--color-grey)] cursor-pointer rounded-md text-[14px]">
+              Cancel
+            </button>
+            <button onClick={handleFormSubmit} className="bg-[var(--button-blue)] px-4 py-2 text-[var(--color-white)] hover:bg-[var(--button-hover)] cursor-pointer rounded-md text-[14px]  ">
+              Create Issue
+            </button>
+          </div>
         </div>
       </div>
     </div>
