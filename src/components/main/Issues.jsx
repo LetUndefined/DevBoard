@@ -23,7 +23,10 @@ const Issues = ({ issue, onRowClick }) => {
   };
 
   return (
-    <tr className=" bg-[var(--secondary-bg)] text-white text-[0.8rem] border-[var(--main-border)] border-b border-t hover:bg-[var(--main-bg)] cursor-pointer" onClick={() => onRowClick(issue)}>
+    <tr
+      className=" bg-[var(--secondary-bg)] text-white text-[0.8rem] border-[var(--main-border)] border-b border-t hover:bg-[var(--main-bg)] cursor-pointer hover:text-[var(--main-color)] "
+      onClick={() => onRowClick(issue)}
+    >
       <td className="text-left pl-6 w-[10%] h-[3rem] truncate relative text-[0.5rem] text-[var(--color-dg)] ">
         <span className={` ${priorityColors[issue.priority]} absolute w-1 h-9  top-[50%] -translate-y-1/2  left-[10%] `}></span>
         <span>{issue.id}</span>

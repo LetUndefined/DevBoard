@@ -126,9 +126,16 @@ const Modal = () => {
             <button onClick={() => [openModal(false), setIsEditing(false)]} className="bg-[var(--color-dg)] px-4 py-2 text-[var(--color-white)] hover:bg-[var(--color-grey)] cursor-pointer rounded-md text-[14px]">
               Cancel
             </button>
-            <button onClick={handleFormSubmit} className="bg-[var(--button-blue)] px-4 py-2 text-[var(--color-white)] hover:bg-[var(--button-hover)] cursor-pointer rounded-md text-[14px]  ">
-              Create Issue
-            </button>
+            {!isEditing && (
+              <button onClick={handleFormSubmit} className="bg-[var(--button-blue)] px-4 py-2 text-[var(--color-white)] hover:bg-[var(--button-hover)] cursor-pointer rounded-md text-[14px]  ">
+                Create Issue
+              </button>
+            )}
+            {isEditing && (
+              <button onClick={handleFormSubmit} className="bg-[var(--button-blue)] px-4 py-2 text-[var(--color-white)] hover:bg-[var(--button-hover)] cursor-pointer rounded-md text-[14px]  ">
+                Update Issue
+              </button>
+            )}
           </div>
         </div>
       </div>
