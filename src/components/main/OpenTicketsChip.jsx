@@ -8,7 +8,7 @@ const OpenTicketsChip = () => {
   return (
     <>
       <div className="flex border-1 p-1 text-[10px] rounded-full border-[var(--main-border)] text-[var(--color-grey)]">
-        <div className="flex gap-1">
+        <div className="flex gap-1 px-1 py-0.5">
           <span>{issues.length}</span>
           <span>open</span>
         </div>

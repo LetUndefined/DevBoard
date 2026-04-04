@@ -3,11 +3,12 @@ import { IssueContext } from "../../context/IssueContext";
 import Issues from "./Issues";
 import { EditRowContext } from "../../context/EditRowContext";
 import { ModalContext } from "../../context/ModalContext";
+import Modal from "../IssueModal/IssueModal";
 
 const IssuesList = () => {
   const { issues } = useContext(IssueContext);
   const { setData, setIsEditing } = useContext(EditRowContext);
-  const { openModal } = useContext(ModalContext);
+  const { modal, openModal } = useContext(ModalContext);
 
   const handleEdit = (issue) => {
     setData(issue);
@@ -32,6 +33,7 @@ const IssuesList = () => {
           })}
         </tbody>
       </table>
+      {modal && <Modal />}
     </>
   );
 };

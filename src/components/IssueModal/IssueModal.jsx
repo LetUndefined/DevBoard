@@ -10,6 +10,7 @@ import { ModalContext } from "../../context/ModalContext";
 import { useState } from "react";
 import { IssueContext } from "../../context/IssueContext";
 import { EditRowContext } from "../../context/EditRowContext";
+import { ProjectContext } from "../../context/ProjectContext";
 
 const initialFormValue = {
   id: "",
@@ -27,6 +28,7 @@ const Modal = () => {
   const { issues, setIssues } = useContext(IssueContext);
   const { data, isEditing, setIsEditing, setData } = useContext(EditRowContext);
   const [formData, setFormData] = useState(initialFormValue);
+  const { projects } = useContext(ProjectContext);
 
   const newData = isEditing ? data : formData;
 
@@ -104,7 +106,7 @@ const Modal = () => {
             </div>
             <div className="flex flex-col flex-1">
               <FormField label="Project">
-                <ProjectSelect onChange={handleOnChange} name="project" value={newData.project} />
+                <ProjectSelect onChange={handleOnChange} name="project" projects={projects} value={newData.project} />
               </FormField>
             </div>
           </div>

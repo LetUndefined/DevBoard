@@ -1,7 +1,7 @@
 import { ModalProvider } from "./context/ModalProvider";
 import SideBar from "./components/header/SideBar";
 import MainHeader from "./components/main/MainHeader";
-import Modal from "./components/modal/Modal";
+import Modal from "./components/IssueModal/IssueModal";
 import { IssueProvider } from "./context/IssueProvider";
 import IssuesList from "./components/main/IssuesList";
 import { EditRowProvider } from "./context/EditRowProvider";
@@ -18,7 +18,6 @@ const App = () => {
             <MainHeader />
             <EditRowProvider>
               <IssuesList />
-              <Modal />
             </EditRowProvider>
           </main>
         </IssueProvider>

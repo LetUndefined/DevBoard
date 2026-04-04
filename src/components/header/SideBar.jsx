@@ -1,9 +1,46 @@
-import React from "react";
-
+import React, { useEffect, useState } from "react";
 import ActiveProject from "./ActiveProject";
 import MenuSelect from "./MenuSelect";
+import ProjectModal from "../../ProjectModal/ProjectModal";
+import { supabase } from "../../lib/supabase";
 
 const SideBar = () => {
+  const [modal, setModal] = useState(false);
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const handleOpenModal = () => {
+    console.log(modal);
+    setModal(true);
+  };
+
+  const handleAdd = async (input) => {
+    try {
+      const { error } = await supabase.from("projects").insert({ name: input });
+      if (error) throw error;
+      fetchProjects();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const fetchProjects = async () => {
+    try {
+      setLoading(true);
+      const { data, error } = await supabase.from("projects").select();
+      if (error) throw error;
+      setProjects(data);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchProjects();
+  }, []);
+
   return (
     <>
       <div className="flex flex-col h-screen  text-[var(--color-grey)]">
@@ -19,7 +56,16 @@ const SideBar = () => {
           <div className="text-[12px] pt-2">
             <h4>Projects</h4>
           </div>
-          <ActiveProject />
+          {loading ? <div>Loading...</div> : <ActiveProject projects={projects} />}
+        </div>
+
+        <div className="flex border-r justify-center border-[var(--main-border)] py-6">
+          <div className="text-[12px] ">
+            {modal && <ProjectModal setModal={setModal} handleAdd={handleAdd} />}
+            <button onClick={() => handleOpenModal()} className="bg-[var(--button-green)] px-9 py-2 text-[var(--color-white)]  cursor-pointer rounded-xl text-[14px]  ">
+              Add Project
+            </button>
+          </div>
         </div>
       </div>
     </>
