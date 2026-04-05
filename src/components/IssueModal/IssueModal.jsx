@@ -10,8 +10,10 @@ import { ModalContext } from "../../context/ModalContext";
 import { useState } from "react";
 import { IssueContext } from "../../context/IssueContext";
 import { EditRowContext } from "../../context/EditRowContext";
-import { ProjectContext } from "../../context/ProjectContext";
 import { useProjects } from "../../hooks/useProjects";
+import { useAddIssue } from "../../hooks/useAddIssue";
+import { useUpdateIssue } from "../../hooks/useUpdateIssue";
+import DeleteModal from "../DeleteIssueModal/DeleteModal";
 
 const initialFormValue = {
   id: "",
@@ -26,17 +28,19 @@ const initialFormValue = {
 
 const Modal = () => {
   const { modal, openModal } = useContext(ModalContext);
+  const [deleteModal, setDeleteModal] = useState(false);
   const { issues, setIssues } = useContext(IssueContext);
   const { data, isEditing, setIsEditing, setData } = useContext(EditRowContext);
   const [formData, setFormData] = useState(initialFormValue);
-  const projects = useProjects();
+  const { projects } = useProjects();
+  const { addNewIssue } = useAddIssue();
+  const { updateIssue } = useUpdateIssue();
 
   const newData = isEditing ? data : formData;
 
   const handleOnChange = (e) => {
     if (isEditing) {
       setData({ ...data, [e.target.name]: e.target.value });
-      console.log([e.target.name], e.target.value);
     } else {
       setFormData({ ...formData, [e.target.name]: e.target.value });
     }
@@ -44,9 +48,26 @@ const Modal = () => {
 
   const handleFormSubmit = () => {
     if (isEditing) {
+      updateIssue(data.id, {
+        title: data.title,
+        description: data.description,
+        status: data.status,
+        due_date: data.dueDate,
+        priority: data.priority,
+        tags: data.tags,
+        project_id: data.project || null,
+      });
       setIssues(issues.map((e) => (e.id === data.id ? data : e)));
     } else {
-      setIssues([...issues, { ...formData, id: crypto.randomUUID() }]);
+      addNewIssue({
+        title: formData.title,
+        description: formData.description,
+        status: formData.status,
+        due_date: formData.dueDate,
+        priority: formData.priority,
+        tags: formData.tags,
+        project_id: formData.project || null,
+      });
     }
     setFormData(initialFormValue);
     openModal(false);
@@ -70,6 +91,7 @@ const Modal = () => {
               value={newData.title}
               onChange={handleOnChange}
               name="title"
+              required
               className="border border-[var(--main-border)] w-full outline-none p-2 rounded-md placeholder-[var(--color-dg)] text-[var(--color-dw)] pl-2"
               placeholder="Short, descriptive issue title"
             />
@@ -81,6 +103,7 @@ const Modal = () => {
               onChange={handleOnChange}
               name="description"
               id="description"
+              required
               className="border border-[var(--main-border)] w-full outline-none p-1 rounded-md text-[var(--color-dw)] placeholder-[var(--color-dg)] pl-2 h-32"
               placeholder="Add more context, steps to reproduce, or acceptance criteria…"
             />
@@ -135,13 +158,19 @@ const Modal = () => {
               </button>
             )}
             {isEditing && (
-              <button onClick={handleFormSubmit} className="bg-[var(--button-blue)] px-4 py-2 text-[var(--color-white)] hover:bg-[var(--button-hover)] cursor-pointer rounded-md text-[14px]  ">
-                Update Issue
-              </button>
+              <>
+                <button onClick={() => setDeleteModal(true)} className="bg-[var(--button-red)] px-4 py-2 text-[var(--color-white)] hover:bg-[var(--button-red-hover)] cursor-pointer rounded-md text-[14px]  ">
+                  Delete
+                </button>
+                <button onClick={handleFormSubmit} className="bg-[var(--button-blue)] px-4 py-2 text-[var(--color-white)] hover:bg-[var(--button-hover)]/50 cursor-pointer rounded-md text-[14px]  ">
+                  Update Issue
+                </button>
+              </>
             )}
           </div>
         </div>
       </div>
+      {deleteModal && <DeleteModal closeModal={setDeleteModal} id={newData.id} />}
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const ProjectModal = ({ setModal, handleAdd }) => {
+const CreateProjectModal = ({ setModal, handleAdd }) => {
   const [input, setInput] = useState("");
 
   const handleClick = () => {
@@ -29,4 +29,4 @@ const ProjectModal = ({ setModal, handleAdd }) => {
   );
 };
 
-export default ProjectModal;
+export default CreateProjectModal;

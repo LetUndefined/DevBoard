@@ -3,10 +3,12 @@ import { supabase } from "../lib/supabase";
 
 export function useProjects() {
   const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchProjects = async () => {
       try {
+        setLoading(true);
         const { data, error } = await supabase.from("projects").select();
         if (error) throw error;
         setProjects(data);
@@ -15,7 +17,8 @@ export function useProjects() {
       }
     };
     fetchProjects();
+    setLoading(false);
   }, []);
 
-  return projects;
+  return { projects, loading };
 }

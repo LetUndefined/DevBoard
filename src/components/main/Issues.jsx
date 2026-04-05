@@ -31,14 +31,14 @@ const Issues = ({ issue, onRowClick }) => {
         <span className={` ${priorityColors[issue.priority]} absolute w-1 h-9  top-[50%] -translate-y-1/2  left-[10%] `}></span>
         <span>{issue.id}</span>
       </td>
-      <td className="text-left pl-6 w-[45%] max-w-[45%] overflow-hidden text-ellipsis whitespace-nowrap">{issue.description}</td>
+      <td className="text-left pl-6 w-[45%] max-w-[45%] overflow-hidden text-ellipsis whitespace-nowrap">{issue.title}</td>
       <td className={`text-left pl-6 w-[10%]`}>
         <span className={`${issueChip[issue.status]} border bg-gray-900 rounded-xl py-1 inline-flex items-center gap-2 text-[0.6rem] px-2`}>
           <span className={`${dotColor[issue.status]} w-2 h-2 rounded-full`}></span>
           {issue.status}
         </span>
       </td>
-      <td className="text-center w-[10%]">
+      <td className="text-center wa-[10%]">
         <div className="flex gap-2 overflow-hidden text-ellipsis whitespace-nowrap ">
           {issue.tags.map((e) => {
             return (
@@ -49,7 +49,7 @@ const Issues = ({ issue, onRowClick }) => {
           })}
         </div>
       </td>
-      <td className="text-left pl-6 w-[15%]">{issue.dueDate}</td>
+      <td className="text-left pl-6 w-[15%]">{issue.due_date}</td>
     </tr>
   );
 };

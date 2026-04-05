@@ -4,9 +4,10 @@ import Issues from "./Issues";
 import { EditRowContext } from "../../context/EditRowContext";
 import { ModalContext } from "../../context/ModalContext";
 import Modal from "../IssueModal/IssueModal";
+import { useIssues } from "../../hooks/useIssues";
 
 const IssuesList = () => {
-  const { issues } = useContext(IssueContext);
+  const { issues } = useIssues();
   const { setData, setIsEditing } = useContext(EditRowContext);
   const { modal, openModal } = useContext(ModalContext);
 
@@ -15,6 +16,7 @@ const IssuesList = () => {
     setIsEditing(true);
     openModal(true);
   };
+
   return (
     <>
       <table className="w-full table-fixed ">
