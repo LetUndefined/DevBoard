@@ -11,6 +11,7 @@ import { useState } from "react";
 import { IssueContext } from "../../context/IssueContext";
 import { EditRowContext } from "../../context/EditRowContext";
 import { ProjectContext } from "../../context/ProjectContext";
+import { useProjects } from "../../hooks/useProjects";
 
 const initialFormValue = {
   id: "",
@@ -19,7 +20,7 @@ const initialFormValue = {
   status: "Todo",
   priority: "low",
   dueDate: "",
-  project: "project",
+  project: "",
   tags: [],
 };
 
@@ -28,7 +29,7 @@ const Modal = () => {
   const { issues, setIssues } = useContext(IssueContext);
   const { data, isEditing, setIsEditing, setData } = useContext(EditRowContext);
   const [formData, setFormData] = useState(initialFormValue);
-  const { projects } = useContext(ProjectContext);
+  const projects = useProjects();
 
   const newData = isEditing ? data : formData;
 

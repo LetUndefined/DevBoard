@@ -6,7 +6,7 @@ const ProjectSelect = ({ name, value, onChange, projects }) => {
       {projects.map((e, index) => {
         return (
           <option key={index} value={e}>
-            {e}
+            {e.name}
           </option>
         );
       })}
