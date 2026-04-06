@@ -4,10 +4,9 @@ import Issues from "./Issues";
 import { EditRowContext } from "../../context/EditRowContext";
 import { ModalContext } from "../../context/ModalContext";
 import Modal from "../IssueModal/IssueModal";
-import { useIssues } from "../../hooks/useIssues";
 
 const IssuesList = () => {
-  const { issues } = useIssues();
+  const { issues } = useContext(IssueContext);
   const { setData, setIsEditing } = useContext(EditRowContext);
   const { modal, openModal } = useContext(ModalContext);
 

@@ -29,7 +29,7 @@ const initialFormValue = {
 const Modal = () => {
   const { modal, openModal } = useContext(ModalContext);
   const [deleteModal, setDeleteModal] = useState(false);
-  const { issues, setIssues } = useContext(IssueContext);
+  const { fetchIssues } = useContext(IssueContext);
   const { data, isEditing, setIsEditing, setData } = useContext(EditRowContext);
   const [formData, setFormData] = useState(initialFormValue);
   const { projects } = useProjects();
@@ -46,9 +46,9 @@ const Modal = () => {
     }
   };
 
-  const handleFormSubmit = () => {
+  const handleFormSubmit = async () => {
     if (isEditing) {
-      updateIssue(data.id, {
+      await updateIssue(data.id, {
         title: data.title,
         description: data.description,
         status: data.status,
@@ -57,9 +57,8 @@ const Modal = () => {
         tags: data.tags,
         project_id: data.project || null,
       });
-      setIssues(issues.map((e) => (e.id === data.id ? data : e)));
     } else {
-      addNewIssue({
+      await addNewIssue({
         title: formData.title,
         description: formData.description,
         status: formData.status,
@@ -69,6 +68,7 @@ const Modal = () => {
         project_id: formData.project || null,
       });
     }
+    fetchIssues();
     setFormData(initialFormValue);
     openModal(false);
     setIsEditing(false);
