@@ -6,7 +6,7 @@ import { ModalContext } from "../../context/ModalContext";
 import Modal from "../IssueModal/IssueModal";
 
 const IssuesList = () => {
-  const { issues } = useContext(IssueContext);
+  const { issues, projectFilter } = useContext(IssueContext);
   const { setData, setIsEditing } = useContext(EditRowContext);
   const { modal, openModal } = useContext(ModalContext);
 
@@ -15,6 +15,8 @@ const IssuesList = () => {
     setIsEditing(true);
     openModal(true);
   };
+
+  const filteredArray = issues.filter((e) => e.project_id === projectFilter);
 
   return (
     <>
@@ -29,9 +31,17 @@ const IssuesList = () => {
           </tr>
         </thead>
         <tbody className="">
-          {issues.map((issue) => {
-            return <Issues key={issue.id} issue={issue} onRowClick={handleEdit} />;
-          })}
+          {filteredArray.length > 0 ? (
+            filteredArray.map((issue) => {
+              return <Issues key={issue.id} issue={issue} onRowClick={handleEdit} />;
+            })
+          ) : (
+            <tr>
+              <td colSpan="5" className="text-white p-2">
+                No issues found
+              </td>
+            </tr>
+          )}
         </tbody>
       </table>
       {modal && <Modal />}

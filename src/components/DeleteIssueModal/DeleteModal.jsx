@@ -15,9 +15,9 @@ const DeleteModal = ({ closeModal, id }) => {
 
   return (
     <div className="fixed inset-0 flex justify-center items-center bg-[var(--color-dg)]/20">
-      <div className="border border-[var(--button-red)] w-[20%] bg-[var(--main-bg)] p-8 flex flex-col gap-6 text-center">
+      <div className="border border-[var(--button-red)] w-[25%] bg-[var(--main-bg)] p-9 flex flex-col gap-6 text-center">
         <h4 className="text-[1rem] text-white">Delete Issue?</h4>
-        <div className="flex justify-evenly">
+        <div className="flex justify-center gap-3 ">
           <button onClick={() => closeModal(false)} className="bg-[var(--color-dg)] text-white px-9 py-2 rounded-xl cursor-pointer hover:bg-[var(--color-grey)] ">
             Cancel
           </button>

@@ -143,7 +143,7 @@ const Modal = () => {
         </div>
         <div className="flex justify-between py-4 gap-2  px-6 border-t border-[var(--main-border)] ">
           {newData.id && (
-            <div className="text-[0.8rem] gap-2 text-white flex items-center">
+            <div className="text-[0.5rem] gap-2 text-[var(--color-grey)] flex items-center">
               <span>ID:</span>
               <span>{newData.id}</span>
             </div>

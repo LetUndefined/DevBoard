@@ -16,11 +16,11 @@ const CreateProjectModal = ({ setModal, handleAdd }) => {
       <div className="border w-[20%] bg-[var(--main-bg)] p-8 flex flex-col gap-6 text-center">
         <h4 className="text-[1rem]">Enter Project Name</h4>
         <input type="text" className="border rounded-md text-center p-2 text-[1rem]" onChange={(e) => setInput(e.target.value)} />
-        <div className="flex justify-evenly">
-          <button onClick={() => setModal(false)} className="bg-[var(--color-dg)] text-white px-9 py-2 rounded-xl cursor-pointer">
+        <div className="flex justify-center gap-3">
+          <button onClick={() => setModal(false)} className="bg-[var(--color-dg)] text-white px-9 py-2 rounded-xl cursor-pointer hover:opacity-80 transition-opacity">
             Cancel
           </button>
-          <button onClick={() => handleClick()} className="bg-[var(--button-green)] text-white px-9 py-2 rounded-xl cursor-pointer">
+          <button onClick={() => handleClick()} className="bg-[var(--button-green)] text-white px-9 py-2 rounded-xl cursor-pointer hover:opacity-80 transition-opacity">
             Confirm
           </button>
         </div>

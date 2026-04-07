@@ -10,10 +10,10 @@ const App = () => {
   return (
     <ModalProvider>
       <div className="flex">
-        <header className=" text-[var(--main-color)] bg-[var(--main-bg)] min-h-screen w-64  ">
-          <SideBar />
-        </header>
         <IssueProvider>
+          <header className=" text-[var(--main-color)] bg-[var(--main-bg)] min-h-screen w-64  ">
+            <SideBar />
+          </header>
           <main className="  h-screen flex-1 bg-[var(--secondary-bg)]  ">
             <MainHeader />
             <EditRowProvider>
