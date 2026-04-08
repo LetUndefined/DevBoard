@@ -9,7 +9,6 @@ const SideBar = () => {
   const [modal, setModal] = useState(false);
 
   const handleOpenModal = () => {
-    console.log(modal);
     setModal(true);
   };
 

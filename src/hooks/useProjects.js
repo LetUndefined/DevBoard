@@ -18,7 +18,7 @@ export function useProjects() {
     };
     fetchProjects();
     setLoading(false);
-  }, []);
+  }, [projects]);
 
   return { projects, loading };
 }
