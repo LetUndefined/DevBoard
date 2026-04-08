@@ -7,6 +7,7 @@ import { useProjects } from "../../hooks/useProjects";
 
 const SideBar = () => {
   const [modal, setModal] = useState(false);
+  const { projects, loading, fetchProjects } = useProjects();
 
   const handleOpenModal = () => {
     setModal(true);
@@ -16,12 +17,11 @@ const SideBar = () => {
     try {
       const { error } = await supabase.from("projects").insert({ name: input });
       if (error) throw error;
+      fetchProjects();
     } catch (error) {
       console.error(error);
     }
   };
-
-  const { projects, loading } = useProjects();
 
   return (
     <>
@@ -38,7 +38,7 @@ const SideBar = () => {
           <div className="text-[12px] pt-2">
             <h4>Projects</h4>
           </div>
-          {loading ? <div>Loading...</div> : <ActiveProject projects={projects} />}
+          {loading ? <div>Loading...</div> : <ActiveProject projects={projects} fetchProjects={fetchProjects} />}
         </div>
 
         <div className="flex border-r justify-center border-[var(--main-border)] py-6">

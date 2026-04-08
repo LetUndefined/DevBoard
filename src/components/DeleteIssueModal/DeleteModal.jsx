@@ -2,14 +2,18 @@ import React from "react";
 import { supabase } from "../../lib/supabase";
 import { useContext } from "react";
 import { ModalContext } from "../../context/ModalContext";
+import { IssueContext } from "../../context/IssueContext";
 
 const DeleteModal = ({ closeModal, id }) => {
   const { openModal } = useContext(ModalContext);
+  const { fetchIssues } = useContext(IssueContext);
 
   const deleteIssue = async () => {
     const response = await supabase.from("issues").delete().eq("id", id);
     closeModal(false);
     openModal(false);
+
+    fetchIssues();
     return response;
   };
 

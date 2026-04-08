@@ -5,20 +5,21 @@ export function useProjects() {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  const fetchProjects = async () => {
+    try {
+      setLoading(true);
+      const { data, error } = await supabase.from("projects").select();
+      if (error) throw error;
+      setProjects(data);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
   useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        setLoading(true);
-        const { data, error } = await supabase.from("projects").select();
-        if (error) throw error;
-        setProjects(data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
     fetchProjects();
-    setLoading(false);
-  }, [projects]);
+  }, []);
 
-  return { projects, loading };
+  return { projects, loading, fetchProjects };
 }

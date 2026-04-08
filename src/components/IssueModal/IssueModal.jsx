@@ -15,19 +15,8 @@ import { useAddIssue } from "../../hooks/useAddIssue";
 import { useUpdateIssue } from "../../hooks/useUpdateIssue";
 import DeleteModal from "../DeleteIssueModal/DeleteModal";
 
-const initialFormValue = {
-  id: "",
-  title: "",
-  description: "",
-  status: "Todo",
-  priority: "low",
-  dueDate: "",
-  project: "",
-  tags: [],
-};
-
 const Modal = () => {
-  const { modal, openModal } = useContext(ModalContext);
+  const { modal, openModal, initialFormValue } = useContext(ModalContext);
   const [deleteModal, setDeleteModal] = useState(false);
   const { fetchIssues } = useContext(IssueContext);
   const { data, isEditing, setIsEditing, setData } = useContext(EditRowContext);
@@ -80,7 +69,7 @@ const Modal = () => {
       <div className="border border-[var(--main-border)] w-[40%]  bg-[var(--main-bg)] rounded-xl">
         <div className="py-4 px-8 border-b border-[var(--main-border)] flex justify-between text-[var(--main-color)]">
           <h4>New Issue</h4>
-          <span className="cursor-pointer" onClick={() => openModal(false)}>
+          <span className="cursor-pointer" onClick={() => [openModal(false), setIsEditing(false)]}>
             x
           </span>
         </div>

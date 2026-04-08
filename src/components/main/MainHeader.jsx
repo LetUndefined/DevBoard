@@ -4,6 +4,10 @@ import { ModalContext } from "../../context/ModalContext";
 
 const MainHeader = () => {
   const { openModal } = useContext(ModalContext);
+
+  const handleModal = () => {
+    openModal(true);
+  };
   return (
     <>
       <div className="flex justify-between items-center border-b border-[var(--main-border)] bg-[var(--main-bg)] px-4 h-15  ">
@@ -24,7 +28,7 @@ const MainHeader = () => {
             />
           </div>
           <div>
-            <button onClick={() => openModal(true)} className="bg-[var(--button-blue)] px-4 py-2 text-[var(--color-white)] hover:bg-[var(--button-hover)] cursor-pointer rounded-xl text-[14px]  ">
+            <button onClick={() => handleModal()} className="bg-[var(--button-blue)] px-4 py-2 text-[var(--color-white)] hover:bg-[var(--button-hover)] cursor-pointer rounded-xl text-[14px]  ">
               + New issue
             </button>
           </div>
