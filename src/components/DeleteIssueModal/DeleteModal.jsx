@@ -5,13 +5,12 @@ import { ModalContext } from "../../context/ModalContext";
 import { IssueContext } from "../../context/IssueContext";
 
 const DeleteModal = ({ closeModal, id }) => {
-  const { openModal } = useContext(ModalContext);
+  const { dispatch } = useContext(ModalContext);
   const { fetchIssues } = useContext(IssueContext);
 
   const deleteIssue = async () => {
     const response = await supabase.from("issues").delete().eq("id", id);
-    closeModal(false);
-    openModal(false);
+    dispatch({ type: "CLOSE_MODAL" });
 
     fetchIssues();
     return response;

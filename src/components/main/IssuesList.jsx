@@ -7,13 +7,12 @@ import Modal from "../IssueModal/IssueModal";
 
 const IssuesList = () => {
   const { issues, projectFilter } = useContext(IssueContext);
-  const { setData, setIsEditing } = useContext(EditRowContext);
-  const { modal, openModal } = useContext(ModalContext);
+  const { dispatch: editDispatch } = useContext(EditRowContext);
+  const { state, dispatch } = useContext(ModalContext);
 
   const handleEdit = (issue) => {
-    setData(issue);
-    setIsEditing(true);
-    openModal(true);
+    editDispatch({ type: "EDIT_ISSUE", payload: issue });
+    dispatch({ type: "OPEN_MODAL" });
   };
 
   const filteredArray = issues.filter((e) => e.project_id === projectFilter);
@@ -44,7 +43,7 @@ const IssuesList = () => {
           )}
         </tbody>
       </table>
-      {modal && <Modal />}
+      {state.modal && <Modal />}
     </>
   );
 };

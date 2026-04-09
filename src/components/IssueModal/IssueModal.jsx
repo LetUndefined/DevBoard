@@ -16,35 +16,35 @@ import { useUpdateIssue } from "../../hooks/useUpdateIssue";
 import DeleteModal from "../DeleteIssueModal/DeleteModal";
 
 const Modal = () => {
-  const { modal, openModal, initialFormValue } = useContext(ModalContext);
+  const { state, dispatch, initialFormValue } = useContext(ModalContext);
   const [deleteModal, setDeleteModal] = useState(false);
   const { fetchIssues } = useContext(IssueContext);
-  const { data, isEditing, setIsEditing, setData } = useContext(EditRowContext);
+  const { state: editState, dispatch: editDispatch } = useContext(EditRowContext);
   const [formData, setFormData] = useState(initialFormValue);
   const { projects } = useProjects();
   const { addNewIssue } = useAddIssue();
   const { updateIssue } = useUpdateIssue();
 
-  const newData = isEditing ? data : formData;
+  const newData = editState.isEditing ? editState.data : formData;
 
   const handleOnChange = (e) => {
-    if (isEditing) {
-      setData({ ...data, [e.target.name]: e.target.value });
+    if (editState.isEditing) {
+      editDispatch({ type: "UPDATE_FIELD", payload: { [e.target.name]: e.target.value } });
     } else {
       setFormData({ ...formData, [e.target.name]: e.target.value });
     }
   };
 
   const handleFormSubmit = async () => {
-    if (isEditing) {
-      await updateIssue(data.id, {
-        title: data.title,
-        description: data.description,
-        status: data.status,
-        due_date: data.dueDate,
-        priority: data.priority,
-        tags: data.tags,
-        project_id: data.project || null,
+    if (editState.isEditing) {
+      await updateIssue(editState.data.id, {
+        title: editState.data.title,
+        description: editState.data.description,
+        status: editState.data.status,
+        due_date: editState.data.dueDate || editState.data.due_date,
+        priority: editState.data.priority,
+        tags: editState.data.tags,
+        project_id: editState.data.project_id || editState.data.project || null,
       });
     } else {
       await addNewIssue({
@@ -59,17 +59,17 @@ const Modal = () => {
     }
     fetchIssues();
     setFormData(initialFormValue);
-    openModal(false);
-    setIsEditing(false);
+    dispatch({ type: "CLOSE_MODAL" });
+    editDispatch({ type: "STOP_EDITING" });
   };
 
-  if (!modal) return null;
+  if (!state.modal) return null;
   return (
     <div className="fixed inset-0 bg-[var(--color-dg)]/20 flex items-center justify-center">
       <div className="border border-[var(--main-border)] w-[40%]  bg-[var(--main-bg)] rounded-xl">
         <div className="py-4 px-8 border-b border-[var(--main-border)] flex justify-between text-[var(--main-color)]">
           <h4>New Issue</h4>
-          <span className="cursor-pointer" onClick={() => [openModal(false), setIsEditing(false)]}>
+          <span className="cursor-pointer" onClick={() => [dispatch({ type: "CLOSE_MODAL" }), editDispatch({ type: "STOP_EDITING" })]}>
             x
           </span>
         </div>
@@ -138,15 +138,18 @@ const Modal = () => {
             </div>
           )}
           <div className="flex gap-2">
-            <button onClick={() => [openModal(false), setIsEditing(false)]} className="bg-[var(--color-dg)] px-4 py-2 text-[var(--color-white)] hover:bg-[var(--color-grey)] cursor-pointer rounded-md text-[14px]">
+            <button
+              onClick={() => [dispatch({ type: "CLOSE_MODAL" }), editDispatch({ type: "STOP_EDITING" })]}
+              className="bg-[var(--color-dg)] px-4 py-2 text-[var(--color-white)] hover:bg-[var(--color-grey)] cursor-pointer rounded-md text-[14px]"
+            >
               Cancel
             </button>
-            {!isEditing && (
+            {!editState.isEditing && (
               <button onClick={handleFormSubmit} className="bg-[var(--button-blue)] px-4 py-2 text-[var(--color-white)] hover:bg-[var(--button-hover)] cursor-pointer rounded-md text-[14px]  ">
                 Create Issue
               </button>
             )}
-            {isEditing && (
+            {editState.isEditing && (
               <>
                 <button onClick={() => setDeleteModal(true)} className="bg-[var(--button-red)] px-4 py-2 text-[var(--color-white)] hover:bg-[var(--button-red-hover)] cursor-pointer rounded-md text-[14px]  ">
                   Delete

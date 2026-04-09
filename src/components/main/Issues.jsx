@@ -1,5 +1,3 @@
-import { ModalContext } from "../../context/ModalContext";
-
 const Issues = ({ issue, onRowClick }) => {
   const issueChip = {
     Todo: "text-blue-400 border-blue-400",
