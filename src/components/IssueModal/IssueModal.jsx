@@ -72,7 +72,10 @@ const Modal = () => {
             x
           </span>
         </div>
-        <div className="py-4 px-6 flex flex-col gap-6">
+        <form onSubmit={(e) => {
+          e.preventDefault();
+          handleFormSubmit();
+        }} className="py-4 px-6 flex flex-col gap-6">
           <FormField label="Title">
             <input
               type="text"
@@ -128,38 +131,39 @@ const Modal = () => {
               <TagSelect onChange={handleOnChange} name="tags" value={newData.tags} />
             </FormField>
           </div>
-        </div>
-        <div className="flex justify-between py-4 gap-2  px-6 border-t border-[var(--main-border)] ">
-          {newData.id && (
-            <div className="text-[0.5rem] gap-2 text-[var(--color-grey)] flex items-center">
-              <span>ID:</span>
-              <span>{newData.id}</span>
-            </div>
-          )}
-          <div className="flex gap-2">
-            <button
-              onClick={() => [dispatch({ type: "CLOSE_MODAL" }), editDispatch({ type: "STOP_EDITING" })]}
-              className="bg-[var(--color-dg)] px-4 py-2 text-[var(--color-white)] hover:bg-[var(--color-grey)] cursor-pointer rounded-md text-[14px]"
-            >
-              Cancel
-            </button>
-            {!editState.isEditing && (
-              <button onClick={handleFormSubmit} className="bg-[var(--button-blue)] px-4 py-2 text-[var(--color-white)] hover:bg-[var(--button-hover)] cursor-pointer rounded-md text-[14px]  ">
-                Create Issue
+          <div className="flex justify-between py-4 gap-2 border-t border-[var(--main-border)] ">
+            {newData.id && (
+              <div className="text-[0.5rem] gap-2 text-[var(--color-grey)] flex items-center">
+                <span>ID:</span>
+                <span>{newData.id}</span>
+              </div>
+            )}
+            <div className="flex gap-2">
+              <button
+                type="button"
+                onClick={() => [dispatch({ type: "CLOSE_MODAL" }), editDispatch({ type: "STOP_EDITING" })]}
+                className="bg-[var(--color-dg)] px-4 py-2 text-[var(--color-white)] hover:bg-[var(--color-grey)] cursor-pointer rounded-md text-[14px]"
+              >
+                Cancel
               </button>
-            )}
-            {editState.isEditing && (
-              <>
-                <button onClick={() => setDeleteModal(true)} className="bg-[var(--button-red)] px-4 py-2 text-[var(--color-white)] hover:bg-[var(--button-red-hover)] cursor-pointer rounded-md text-[14px]  ">
-                  Delete
+              {!editState.isEditing && (
+                <button type="submit" className="bg-[var(--button-blue)] px-4 py-2 text-[var(--color-white)] hover:bg-[var(--button-hover)] cursor-pointer rounded-md text-[14px]  ">
+                  Create Issue
                 </button>
-                <button onClick={handleFormSubmit} className="bg-[var(--button-blue)] px-4 py-2 text-[var(--color-white)] hover:bg-[var(--button-hover)]/50 cursor-pointer rounded-md text-[14px]  ">
-                  Update Issue
-                </button>
-              </>
-            )}
+              )}
+              {editState.isEditing && (
+                <>
+                  <button type="button" onClick={() => setDeleteModal(true)} className="bg-[var(--button-red)] px-4 py-2 text-[var(--color-white)] hover:bg-[var(--button-red-hover)] cursor-pointer rounded-md text-[14px]  ">
+                    Delete
+                  </button>
+                  <button type="submit" className="bg-[var(--button-blue)] px-4 py-2 text-[var(--color-white)] hover:bg-[var(--button-hover)]/50 cursor-pointer rounded-md text-[14px]  ">
+                    Update Issue
+                  </button>
+                </>
+              )}
+            </div>
           </div>
-        </div>
+        </form>
       </div>
       {deleteModal && <DeleteModal closeModal={setDeleteModal} id={newData.id} />}
     </div>
