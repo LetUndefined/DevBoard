@@ -2,17 +2,17 @@ import React from "react";
 import { supabase } from "../../lib/supabase";
 import { useContext } from "react";
 import { ModalContext } from "../../context/ModalContext";
-import { IssueContext } from "../../context/IssueContext";
+import { useRevalidator } from "react-router";
 
 const DeleteModal = ({ closeModal, id }) => {
   const { dispatch } = useContext(ModalContext);
-  const { fetchIssues } = useContext(IssueContext);
+  const revalidator = useRevalidator();
 
   const deleteIssue = async () => {
     const response = await supabase.from("issues").delete().eq("id", id);
     dispatch({ type: "CLOSE_MODAL" });
 
-    fetchIssues();
+    revalidator.revalidate();
     return response;
   };
 

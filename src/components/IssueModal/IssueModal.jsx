@@ -8,22 +8,21 @@ import TagSelect from "./TagSelect";
 import { useContext } from "react";
 import { ModalContext } from "../../context/ModalContext";
 import { useState } from "react";
-import { IssueContext } from "../../context/IssueContext";
 import { EditRowContext } from "../../context/EditRowContext";
-import { useProjects } from "../../hooks/useProjects";
 import { useAddIssue } from "../../hooks/useAddIssue";
 import { useUpdateIssue } from "../../hooks/useUpdateIssue";
 import DeleteModal from "../DeleteIssueModal/DeleteModal";
+import { useLoaderData, useRevalidator } from "react-router";
 
 const Modal = () => {
   const { state, dispatch, initialFormValue } = useContext(ModalContext);
   const [deleteModal, setDeleteModal] = useState(false);
-  const { fetchIssues } = useContext(IssueContext);
   const { state: editState, dispatch: editDispatch } = useContext(EditRowContext);
   const [formData, setFormData] = useState(initialFormValue);
-  const { projects } = useProjects();
+  const { projects } = useLoaderData();
   const { addNewIssue } = useAddIssue();
   const { updateIssue } = useUpdateIssue();
+  const revalidator = useRevalidator();
 
   const newData = editState.isEditing ? editState.data : formData;
 
@@ -41,7 +40,7 @@ const Modal = () => {
         title: editState.data.title,
         description: editState.data.description,
         status: editState.data.status,
-        due_date: editState.data.dueDate || editState.data.due_date,
+        due_date: editState.data.due_date,
         priority: editState.data.priority,
         tags: editState.data.tags,
         project_id: editState.data.project_id || editState.data.project || null,
@@ -51,13 +50,13 @@ const Modal = () => {
         title: formData.title,
         description: formData.description,
         status: formData.status,
-        due_date: formData.dueDate,
+        due_date: formData.due_date,
         priority: formData.priority,
         tags: formData.tags,
-        project_id: formData.project || null,
+        project_id: formData.project_id,
       });
     }
-    fetchIssues();
+    revalidator.revalidate();
     setFormData(initialFormValue);
     dispatch({ type: "CLOSE_MODAL" });
     editDispatch({ type: "STOP_EDITING" });
@@ -114,12 +113,12 @@ const Modal = () => {
           <div className="flex gap-4">
             <div className="flex flex-col flex-1">
               <FormField label="Due Date">
-                <DateInput onChange={handleOnChange} name="dueDate" value={newData.dueDate} />
+                <DateInput onChange={handleOnChange} name="due_date" value={newData.due_date} />
               </FormField>
             </div>
             <div className="flex flex-col flex-1">
               <FormField label="Project">
-                <ProjectSelect onChange={handleOnChange} name="project" projects={projects} value={newData.project} />
+                <ProjectSelect onChange={handleOnChange} name="project_id" projects={projects} value={newData.project_id} />
               </FormField>
             </div>
           </div>

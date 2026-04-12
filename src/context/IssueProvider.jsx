@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { IssueContext } from "./IssueContext";
-import { useIssues } from "../hooks/useIssues";
+import { useLoaderData } from "react-router";
 
 export const IssueProvider = ({ children }) => {
-  const { issues, fetchIssues } = useIssues();
+  const { issues } = useLoaderData();
   const [projectFilter, setProjectFilter] = useState(null);
-  return <IssueContext value={{ issues, fetchIssues, projectFilter, setProjectFilter }}>{children}</IssueContext>;
+  const [search, setSearch] = useState("");
+  return <IssueContext value={{ issues, projectFilter, setProjectFilter, search, setSearch }}>{children}</IssueContext>;
 };

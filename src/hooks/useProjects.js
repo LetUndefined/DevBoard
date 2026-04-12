@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { supabase } from "../lib/supabase";
 
 export function useProjects() {
@@ -17,9 +17,6 @@ export function useProjects() {
       setLoading(false);
     }
   };
-  useEffect(() => {
-    fetchProjects();
-  }, []);
 
   return { projects, loading, fetchProjects };
 }

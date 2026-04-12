@@ -20,8 +20,8 @@ const initialFormValue = {
   description: "",
   status: "Todo",
   priority: "low",
-  dueDate: "",
-  project: "",
+  due_date: "",
+  project_id: "",
   tags: [],
 };
 

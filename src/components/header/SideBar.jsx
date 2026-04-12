@@ -3,11 +3,12 @@ import ActiveProject from "./ActiveProject";
 import MenuSelect from "./MenuSelect";
 import CreateProjectModal from "../ProjectModal/CreateProjectModal";
 import { supabase } from "../../lib/supabase";
-import { useProjects } from "../../hooks/useProjects";
+import { useLoaderData, useRevalidator } from "react-router";
 
 const SideBar = () => {
   const [modal, setModal] = useState(false);
-  const { projects, loading, fetchProjects } = useProjects();
+  const { projects } = useLoaderData();
+  const revalidator = useRevalidator();
 
   const handleOpenModal = () => {
     setModal(true);
@@ -17,7 +18,7 @@ const SideBar = () => {
     try {
       const { error } = await supabase.from("projects").insert({ name: input });
       if (error) throw error;
-      fetchProjects();
+      revalidator.revalidate();
     } catch (error) {
       console.error(error);
     }
@@ -38,7 +39,7 @@ const SideBar = () => {
           <div className="text-[12px] pt-2">
             <h4>Projects</h4>
           </div>
-          {loading ? <div>Loading...</div> : <ActiveProject projects={projects} fetchProjects={fetchProjects} />}
+          <ActiveProject projects={projects} />
         </div>
 
         <div className="flex border-r justify-center border-[var(--main-border)] py-6">
